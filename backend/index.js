@@ -13,7 +13,7 @@ const app = express();
 const PORT = process.env.PORT;
 
 app.use(cors({
-  origin: "https://pemilihan-istar-putra.vercel.app",
+  origin: "https://pemilihan-istar-putri.vercel.app",
   methods: ["GET", "POST", "PATCH", "DELETE"],
 }));
 app.use(express.json());
