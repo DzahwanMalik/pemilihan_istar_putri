@@ -7,10 +7,15 @@ import db from "../config/database.js";
 User.belongsTo(Candidate, {
   as: "votedCandidate",
   foreignKey: "candidateId",
+  onDelete: "SET NULL",
+  onUpdate: "CASCADE",
 });
 
 // Satu candidate bisa dipilih oleh banyak user
-Candidate.hasMany(User, { as: "voters", foreignKey: "candidateId" });
+Candidate.hasMany(User, {
+  as: "voters",
+  foreignKey: "candidateId",
+});
 
 export { User, Candidate, Admin };
 

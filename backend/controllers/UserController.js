@@ -51,12 +51,15 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    const response = await User.destroy({
-      where: { id: req.params.id },
-    });
+    const user = await User.findByPk(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    await user.destroy();
+
     res.status(200).json({
       message: "User Berhasil Dihapus!",
-      data: response,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -65,7 +68,7 @@ const deleteUser = async (req, res) => {
 
 const deleteUsers = async (req, res) => {
   try {
-    const response = await User.destroy({ where: {} });
+    const response = await User.destroy({ where: {}, individualHooks: true });
     res.status(200).json({
       message: "Semua User Berhasil Dihapus!",
       data: response,
@@ -111,7 +114,7 @@ const importUsers = async (req, res) => {
     const worksheet = workbook.Sheets[sheetName];
     const data = XLSX.utils.sheet_to_json(worksheet);
 
-    await User.destroy({ where: {} });
+    await User.destroy({ where: {}, individualHooks: true });
 
     // Loop data untuk id dan password
     for (const row of data) {

@@ -1,4 +1,5 @@
 import { Sequelize } from "sequelize";
+import { Candidate } from "./index.js";
 import db from "../config/database.js";
 
 const { DataTypes } = Sequelize;
@@ -35,11 +36,24 @@ const User = db.define(
       type: DataTypes.DATE,
       allowNull: true,
     },
+    candidateId: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
   {
     freezeTableName: true,
   }
 );
+
+User.addHook("afterDestroy", async (user) => {
+  if (user.candidateId) {
+    const candidate = await Candidate.findByPk(user.candidateId);
+    if (candidate && candidate.votes > 0) {
+      await Candidate.decrement("votes", { where: { id: user.candidateId } });
+    }
+  }
+});
 
 export default User;
 

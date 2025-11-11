@@ -12,7 +12,7 @@ const getCandidates = async (req, res) => {
 
 const getCandidateById = async (req, res) => {
   try {
-    const response = await Candidate.findOne({ where: { id: req.params.id } });
+    const response = await Candidate.findByPk({ where: { id: req.params.id } });
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -21,7 +21,7 @@ const getCandidateById = async (req, res) => {
 
 const removeCandidateById = async (req, res) => {
   try {
-    const candidate = await Candidate.findOne({ where: { id: req.params.id } });
+    const candidate = await Candidate.findByPk({ where: { id: req.params.id } });
 
     if (!candidate)
       return res.status(401).json({ message: "Kandidat Tidak Ditemukan!" });
@@ -57,21 +57,15 @@ const removeCandidates = async (req, res) => {
 const createCandidate = async (req, res) => {
   try {
     // Generate new ID Logic
-    const lastCandidate = await Candidate.findOne({
+    const lastCandidate = await Candidate.findByPk({
       order: [["id", "DESC"]],
     });
 
     let newID = "CAN001";
     if (lastCandidate) {
       const lastID = lastCandidate.id;
-      // Pastikan lastID memiliki format yang benar (misalnya 'CAN005')
-      if (lastID && lastID.startsWith("CAN")) {
-        const lastNumber = parseInt(lastID.substring(3));
-        newID = `CAN${String(lastNumber + 1).padStart(3, "0")}`;
-      } else {
-        // Jika ID terakhir tidak sesuai format, asumsikan ID terbesar berikutnya adalah CAN001
-        newID = "CAN001";
-      }
+      const lastNumber = parseInt(lastID.substring(3));
+      newID = `CAN${String(lastNumber + 1).padStart(3, "0")}`;
     }
 
     const { name, origin, vision, mission, motto, votes } = req.body;
@@ -101,7 +95,7 @@ const createCandidate = async (req, res) => {
 const updateCandidate = async (req, res) => {
   try {
     // Cari kandidat lama
-    const candidate = await Candidate.findOne({ where: { id: req.params.id } });
+    const candidate = await Candidate.findByPk({ where: { id: req.params.id } });
     if (!candidate)
       return res.status(401).json({ message: "Candidate not found" });
 
@@ -131,7 +125,7 @@ const updateCandidate = async (req, res) => {
     }
 
     // Ambil data baru yang sudah diupdate
-    const updatedCandidate = await Candidate.findOne({
+    const updatedCandidate = await Candidate.findByPk({
       where: { id: req.params.id },
     });
 

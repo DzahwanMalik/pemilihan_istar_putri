@@ -17,8 +17,6 @@ import HistoryPage from "./pages/HistoryPage";
 import ReportPage from "./pages/ReportPage";
 import PageNotFound from "./pages/PageNotFound";
 
-console.log("VITE_API_URL =", import.meta.env.VITE_API_URL);
-
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>

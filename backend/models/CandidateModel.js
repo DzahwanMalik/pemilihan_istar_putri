@@ -42,6 +42,7 @@ const Candidate = db.define(
     votes: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      defaultValue: 0,
     },
   },
   {
