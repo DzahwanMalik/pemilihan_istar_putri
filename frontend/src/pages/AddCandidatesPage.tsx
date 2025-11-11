@@ -3,6 +3,7 @@ import { useForm, type Resolver } from "react-hook-form";
 import { z } from "zod";
 import useAddData from "../api/useAddData";
 import Alert from "../components/molecules/Alert";
+import { useEffect } from "react";
 
 const MAX_FILE_SIZE = 2 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/jpg"];
@@ -35,10 +36,15 @@ const AddCandidatesPage = () => {
 
   const onSubmit = async (data: Candidate) => {
     await addCandidate(data);
-    setTimeout(() => {
-      window.location.href = "/admin/candidates";
-    }, 1000);
   };
+
+  useEffect(() => {
+    if (addSuccess) {
+      setTimeout(() => {
+        window.location.href = "/admin/candidates";
+      }, 1000);
+    }
+  });
 
   return (
     <div className="bg-base-100 h-full p-5 rounded-xl">
