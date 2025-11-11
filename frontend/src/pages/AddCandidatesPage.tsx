@@ -44,7 +44,7 @@ const AddCandidatesPage = () => {
         window.location.href = "/admin/candidates";
       }, 1000);
     }
-  });
+  }, [addSuccess]);
 
   return (
     <div className="bg-base-100 h-full p-5 rounded-xl">

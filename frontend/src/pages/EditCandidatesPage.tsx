@@ -45,9 +45,6 @@ const EditCandidatesPage = () => {
 
   const onSubmit = async (data: Candidate) => {
     await editCandidate(data, id!);
-    setTimeout(() => {
-      window.location.href = "/admin/candidates";
-    }, 1000);
   };
 
   useEffect(() => {
@@ -65,6 +62,14 @@ const EditCandidatesPage = () => {
       });
     }
   }, [candidate, reset]);
+
+  useEffect(() => {
+    if (editSuccess) {
+      setTimeout(() => {
+        window.location.href = "/admin/candidates";
+      }, 1000);
+    }
+  }, [editSuccess]);
 
   return (
     <div className="bg-base-100 h-full p-5 rounded-xl">

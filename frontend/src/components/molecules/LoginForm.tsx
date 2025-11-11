@@ -3,6 +3,7 @@ import { useForm, type Resolver } from "react-hook-form";
 import { z } from "zod";
 import useLoginUser from "../../api/useLogin";
 import Alert from "./Alert";
+import { useEffect } from "react";
 
 const zodSchema = z.object({
   ID: z.string().min(3),
@@ -28,6 +29,21 @@ const LoginForm = () => {
       if (localStorage.getItem("admin")) window.location.href = "/admin";
     }, 1000);
   };
+
+  useEffect(() => {
+    if (loginSuccess) {
+      if (localStorage.getItem("user")) {
+        setTimeout(() => {
+          window.location.href = "/voting";
+        }, 1000);
+      }
+      if (localStorage.getItem("admin")) {
+        setTimeout(() => {
+          window.location.href = "/admin";
+        }, 1000);
+      }
+    }
+  }, [loginSuccess]);
 
   return (
     <form
