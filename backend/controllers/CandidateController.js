@@ -64,8 +64,14 @@ const createCandidate = async (req, res) => {
     let newID = "CAN001";
     if (lastCandidate) {
       const lastID = lastCandidate.id;
-      const lastNumber = parseInt(lastID.substring(3));
-      newID = `CAN${String(lastNumber + 1).padStart(3, "0")}`;
+      // Pastikan lastID memiliki format yang benar (misalnya 'CAN005')
+      if (lastID && lastID.startsWith("CAN")) {
+        const lastNumber = parseInt(lastID.substring(3));
+        newID = `CAN${String(lastNumber + 1).padStart(3, "0")}`;
+      } else {
+        // Jika ID terakhir tidak sesuai format, asumsikan ID terbesar berikutnya adalah CAN001
+        newID = "CAN001";
+      }
     }
 
     const { name, origin, vision, mission, motto, votes } = req.body;
