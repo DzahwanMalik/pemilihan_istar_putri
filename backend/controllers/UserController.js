@@ -65,7 +65,7 @@ const deleteUser = async (req, res) => {
 
 const deleteUsers = async (req, res) => {
   try {
-    const response = await User.destroy({ truncate: true, cascade: true });
+    const response = await User.destroy({ where: {} });
     res.status(200).json({
       message: "Semua User Berhasil Dihapus!",
       data: response,
@@ -111,7 +111,7 @@ const importUsers = async (req, res) => {
     const worksheet = workbook.Sheets[sheetName];
     const data = XLSX.utils.sheet_to_json(worksheet);
 
-    await User.destroy({ truncate: true });
+    await User.destroy({ where: {} });
 
     // Loop data untuk id dan password
     for (const row of data) {

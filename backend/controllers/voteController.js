@@ -20,8 +20,7 @@ const voteCandidate = async (req, res) => {
     user.votedAt = new Date();
     await user.save();
 
-    candidate.votes += 1;
-    await candidate.save();
+    await Candidate.increment("votes", { where: { id: candidateId } });
 
     res.status(200).json({
       message: `Vote for ${candidate.name} recorded successfully!`,
