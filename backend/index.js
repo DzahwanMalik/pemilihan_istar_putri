@@ -12,7 +12,10 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT;
 
-app.use(cors());
+app.use(cors({
+  origin: "http://pemilihan-istar-putri.vercel.app",
+  methods: ["GET", "POST", "PATCH", "DELETE"],
+}));
 app.use(express.json());
 
 app.use(UserRoute);
