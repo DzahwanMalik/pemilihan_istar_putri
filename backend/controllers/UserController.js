@@ -65,7 +65,7 @@ const deleteUser = async (req, res) => {
 
 const deleteUsers = async (req, res) => {
   try {
-    const response = await User.destroy({ truncate: true });
+    const response = await User.destroy({ truncate: true, cascade: true });
     res.status(200).json({
       message: "Semua User Berhasil Dihapus!",
       data: response,

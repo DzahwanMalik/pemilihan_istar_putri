@@ -44,7 +44,7 @@ const removeCandidateById = async (req, res) => {
 
 const removeCandidates = async (req, res) => {
   try {
-    const response = await Candidate.destroy({ truncate: true });
+    const response = await Candidate.destroy({ truncate: true, cascade: true });
     res.status(200).json({
       message: "Semua Kandidat Berhasil Dihapus!",
       data: response,
