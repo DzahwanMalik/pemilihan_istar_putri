@@ -4,11 +4,11 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const db = new Sequelize(
-  import.meta.env.DB_NAME,
-  import.meta.env.DB_USER,
-  import.meta.env.DB_PASSWORD,
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
   {
-    host: import.meta.env.DB_HOST,
+    host: process.env.DB_HOST,
     dialect: "mysql",
   }
 );
