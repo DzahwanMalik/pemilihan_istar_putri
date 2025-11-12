@@ -33,7 +33,7 @@ const removeCandidateById = async (req, res) => {
       { where: { candidateId: candidate.id } }
     );
 
-    console.log(candidate.id);
+    console.log(candidate);
 
     // Hapus foto dari Cloudinary
     if (candidate.imagePublicId) {
