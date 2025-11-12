@@ -21,7 +21,9 @@ const getCandidateById = async (req, res) => {
 
 const removeCandidateById = async (req, res) => {
   try {
-    const candidate = await Candidate.findByPk({ where: { id: req.params.id } });
+    const candidate = await Candidate.findByPk({
+      where: { id: req.params.id },
+    });
 
     if (!candidate)
       return res.status(401).json({ message: "Kandidat Tidak Ditemukan!" });
@@ -44,7 +46,22 @@ const removeCandidateById = async (req, res) => {
 
 const removeCandidates = async (req, res) => {
   try {
-    const response = await Candidate.destroy({ where: {}, individualHooks: true });
+    const candidates = await Candidate.findAll();
+
+    const response = await Candidate.destroy({
+      where: {},
+      individualHooks: true,
+    });
+
+    // Hapus foto dari Cloudinary
+    await Promise.all(
+      candidates.map((candidate) =>
+        candidate.imagePublicId
+          ? cloudinary.uploader.destroy(candidate.imagePublicId)
+          : null
+      )
+    );
+
     res.status(200).json({
       message: "Semua Kandidat Berhasil Dihapus!",
       data: response,
@@ -95,7 +112,9 @@ const createCandidate = async (req, res) => {
 const updateCandidate = async (req, res) => {
   try {
     // Cari kandidat lama
-    const candidate = await Candidate.findByPk({ where: { id: req.params.id } });
+    const candidate = await Candidate.findByPk({
+      where: { id: req.params.id },
+    });
     if (!candidate)
       return res.status(401).json({ message: "Candidate not found" });
 
