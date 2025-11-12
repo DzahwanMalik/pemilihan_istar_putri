@@ -50,13 +50,4 @@ const Candidate = db.define(
   }
 );
 
-Candidate.addHook("afterDestroy", async (candidate) => {
-  console.log("Hook Jalan untuk candidate", candidate.id);
-  const { User } = await import("./index.js");
-  await User.update(
-    { candidateId: null, hasVoted: false, votedAt: null },
-    { where: { candidateId: candidate.id } }
-  );
-});
-
 export default Candidate;
