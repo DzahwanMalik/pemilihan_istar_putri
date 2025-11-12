@@ -21,9 +21,7 @@ const getCandidateById = async (req, res) => {
 
 const removeCandidateById = async (req, res) => {
   try {
-    const candidate = await Candidate.findByPk({
-      where: { id: req.params.id },
-    });
+    const candidate = await Candidate.findByPk(req.params.id);
 
     if (!candidate)
       return res.status(401).json({ message: "Kandidat Tidak Ditemukan!" });
