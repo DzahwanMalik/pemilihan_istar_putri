@@ -32,11 +32,11 @@ const Candidate = db.define(
       allowNull: false,
     },
     mission: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     motto: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     votes: {
