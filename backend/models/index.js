@@ -11,7 +11,7 @@ User.belongsTo(Candidate, {
   onUpdate: "CASCADE",
 });
 
-// Satu candidate bisa dipilih oleh banyak user
+// Satu candidate bisa dipilih oleh banyak users
 Candidate.hasMany(User, {
   as: "voters",
   foreignKey: "candidateId",
