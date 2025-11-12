@@ -1,6 +1,5 @@
 import { Sequelize } from "sequelize";
 import db from "../config/database.js";
-import { User } from "./index.js";
 
 const { DataTypes } = Sequelize;
 
@@ -52,6 +51,7 @@ const Candidate = db.define(
 );
 
 Candidate.addHook("afterDestroy", async (candidate) => {
+  const { User } = await import("./index.js");
   await User.update(
     { candidateId: null, hasVoted: false, votedAt: null },
     { where: { candidateId: candidate.id } }

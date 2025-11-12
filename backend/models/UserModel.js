@@ -1,5 +1,4 @@
 import { Sequelize } from "sequelize";
-import { Candidate } from "./index.js";
 import db from "../config/database.js";
 
 const { DataTypes } = Sequelize;
@@ -47,6 +46,7 @@ const User = db.define(
 );
 
 User.addHook("afterDestroy", async (user) => {
+  const { Candidate } = await import("./index.js");
   if (user.candidateId) {
     const candidate = await Candidate.findByPk(user.candidateId);
     if (candidate && candidate.votes > 0) {
