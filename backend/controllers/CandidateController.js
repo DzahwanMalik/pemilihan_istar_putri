@@ -13,7 +13,7 @@ const getCandidates = async (req, res) => {
 
 const getCandidateById = async (req, res) => {
   try {
-    const response = await Candidate.findByPk({ where: { id: req.params.id } });
+    const response = await Candidate.findByPk(req.params.id);
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -30,8 +30,10 @@ const removeCandidateById = async (req, res) => {
     // Update User
     await User.update(
       { candidateId: null, hasVoted: false, votedAt: null },
-      { where: { candidateId: { where: candidate.id } } }
+      { where: { candidateId: candidate.id } }
     );
+
+    console.log(candidate.id);
 
     // Hapus foto dari Cloudinary
     if (candidate.imagePublicId) {
@@ -125,9 +127,7 @@ const createCandidate = async (req, res) => {
 const updateCandidate = async (req, res) => {
   try {
     // Cari kandidat lama
-    const candidate = await Candidate.findByPk({
-      where: { id: req.params.id },
-    });
+    const candidate = await Candidate.findByPk(req.params.id);
     if (!candidate)
       return res.status(401).json({ message: "Candidate not found" });
 

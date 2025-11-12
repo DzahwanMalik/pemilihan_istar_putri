@@ -29,7 +29,8 @@ const User = db.define(
     },
     hasVoted: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
+      defaultValue: false,
     },
     votedAt: {
       type: DataTypes.DATE,
