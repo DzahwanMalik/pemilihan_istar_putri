@@ -15,8 +15,6 @@ User.belongsTo(Candidate, {
 Candidate.hasMany(User, {
   as: "voters",
   foreignKey: "candidateId",
-  onDelete: "SET NULL",
-  onUpdate: "CASCADE",
 });
 
 export { User, Candidate, Admin };

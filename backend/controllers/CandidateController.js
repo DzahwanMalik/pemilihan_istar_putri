@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import cloudinary from "../config/cloudinary.js";
 import { Candidate } from "../models/index.js";
 
@@ -26,6 +27,12 @@ const removeCandidateById = async (req, res) => {
     if (!candidate)
       return res.status(401).json({ message: "Kandidat Tidak Ditemukan!" });
 
+    // Update User
+    await User.update(
+      { candidateId: null, hasVoted: false, votedAt: null },
+      { where: { candidateId: { [Op.ne]: [null] } } }
+    );
+
     // Hapus foto dari Cloudinary
     if (candidate.imagePublicId) {
       await cloudinary.uploader.destroy(candidate.imagePublicId);
@@ -50,6 +57,12 @@ const removeCandidates = async (req, res) => {
       where: {},
       individualHooks: true,
     });
+
+    // Update User
+    await User.update(
+      { candidateId: null, hasVoted: false, votedAt: null },
+      { where: { candidateId: { [Op.ne]: [null] } } }
+    );
 
     // Hapus foto dari Cloudinary
     await Promise.all(
