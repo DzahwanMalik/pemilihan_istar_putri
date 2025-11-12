@@ -1,5 +1,6 @@
 import { Sequelize } from "sequelize";
 import db from "../config/database.js";
+import { User } from "./index.js";
 
 const { DataTypes } = Sequelize;
 
@@ -49,6 +50,13 @@ const Candidate = db.define(
     freezeTableName: true,
   }
 );
+
+Candidate.addHook("afterDestroy", async (candidate) => {
+  await User.update(
+    { candidateId: null, hasVoted: false, votedAt: null },
+    { where: { candidateId: candidate.id } }
+  );
+});
 
 export default Candidate;
 

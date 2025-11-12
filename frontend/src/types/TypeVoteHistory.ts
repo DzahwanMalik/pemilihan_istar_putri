@@ -4,7 +4,7 @@ type VoteHistory = {
   kelas: string;
   jenisKelamin: string;
   votedCandidate: {
-    name: string;
+    name: string | null;
   }
   votedAt: string;
 };

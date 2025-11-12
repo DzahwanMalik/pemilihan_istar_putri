@@ -19,7 +19,7 @@ const HistoryTable = ({ data, getLoading, getError }: Props) => {
       item.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.kelas.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.jenisKelamin.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.votedCandidate.name.toLowerCase().includes(searchTerm.toLowerCase())
+      item.votedCandidate?.name?.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
 
