@@ -1,4 +1,4 @@
-import { Op } from "sequelize";
+import { Op, where } from "sequelize";
 import cloudinary from "../config/cloudinary.js";
 import { Candidate, User } from "../models/index.js";
 
@@ -30,7 +30,7 @@ const removeCandidateById = async (req, res) => {
     // Update User
     await User.update(
       { candidateId: null, hasVoted: false, votedAt: null },
-      { where: { candidateId: { [Op.ne]: [null] } } }
+      { where: { candidateId: { where: candidate.id } } }
     );
 
     // Hapus foto dari Cloudinary
@@ -58,10 +58,12 @@ const removeCandidates = async (req, res) => {
       individualHooks: true,
     });
 
+    const candidateIds = candidates.map((candidate) => candidate.id);
+
     // Update User
     await User.update(
       { candidateId: null, hasVoted: false, votedAt: null },
-      { where: { candidateId: { [Op.ne]: [null] } } }
+      { where: { candidateId: { [Op.in]: candidateIds } } }
     );
 
     // Hapus foto dari Cloudinary
