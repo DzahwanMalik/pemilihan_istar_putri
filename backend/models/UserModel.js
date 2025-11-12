@@ -56,7 +56,3 @@ User.addHook("afterDestroy", async (user) => {
 });
 
 export default User;
-
-(async () => {
-  await db.sync();
-})();
