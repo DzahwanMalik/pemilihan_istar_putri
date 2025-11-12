@@ -57,7 +57,7 @@ const removeCandidates = async (req, res) => {
 const createCandidate = async (req, res) => {
   try {
     // Generate new ID Logic
-    const lastCandidate = await Candidate.findByPk({
+    const lastCandidate = await Candidate.findOne({
       order: [["id", "DESC"]],
     });
 
