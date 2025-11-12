@@ -1,6 +1,6 @@
 import { Op } from "sequelize";
 import cloudinary from "../config/cloudinary.js";
-import { Candidate } from "../models/index.js";
+import { Candidate, User } from "../models/index.js";
 
 const getCandidates = async (req, res) => {
   try {
