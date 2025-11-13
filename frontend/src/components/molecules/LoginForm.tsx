@@ -21,8 +21,9 @@ const LoginForm = () => {
     useLoginUser();
 
   const onSubmit = async (data: FormData) => {
-    if (data.ID === "admin") await loginAdmin(data.ID, data.password);
-    await loginUser(data.ID, data.password);
+    data.ID === "admin"
+      ? await loginAdmin(data.ID, data.password)
+      : await loginUser(data.ID, data.password);
 
     setTimeout(() => {
       if (localStorage.getItem("user")) window.location.href = "/voting";

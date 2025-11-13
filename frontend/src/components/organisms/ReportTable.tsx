@@ -110,7 +110,7 @@ const ReportTable = ({ data, getLoading, getError }: Props) => {
               <tr key={index}>
                 <td>{item.id}</td>
                 <td>
-                  <div className="h-56 overflow-hidden rounded-md">
+                  <div className="overflow-hidden rounded-md">
                     <img
                       src={item.image}
                       alt=""

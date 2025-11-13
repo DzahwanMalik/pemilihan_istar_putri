@@ -1,4 +1,4 @@
-import { Op, where } from "sequelize";
+import { Op } from "sequelize";
 import cloudinary from "../config/cloudinary.js";
 import { Candidate, User } from "../models/index.js";
 
@@ -155,9 +155,7 @@ const updateCandidate = async (req, res) => {
     }
 
     // Ambil data baru yang sudah diupdate
-    const updatedCandidate = await Candidate.findByPk({
-      where: { id: req.params.id },
-    });
+    const updatedCandidate = await Candidate.findByPk(req.params.id);
 
     res.status(200).json({
       message: "Candidate updated successfully",

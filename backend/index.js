@@ -9,13 +9,13 @@ import voteRoutes from "./routes/voteRoutes.js";
 
 dotenv.config();
 
-const app = express();
-const PORT = process.env.PORT;
-
-app.use(cors({
+const app = express({
   origin: "https://pemilihan-istar-putri.vercel.app",
   methods: ["GET", "POST", "PATCH", "DELETE"],
-}));
+});
+const PORT = process.env.PORT;
+
+app.use(cors());
 app.use(express.json());
 
 app.use(UserRoute);
@@ -35,5 +35,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log("Server is running on port 3000");
+  console.log(`Server running on port ${PORT}`);
 });
